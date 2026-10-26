@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { getMovieDetail } from '../apis/movie';
 import { getBackdropUrl, getPosterUrl } from '../constants/image';
 import type { MovieDetail as MovieDetailType } from '../types/movie';
-import { formatDate, formatRuntime } from '../utils/format';
+import { formatDate, formatMoney, formatRuntime } from '../utils/format';
 
 const languageNames = new Intl.DisplayNames(['ko'], { type: 'language' });
 
@@ -66,6 +66,8 @@ function MovieDetail() {
       label: '사용 언어',
       value: movie.spoken_languages.map((language) => language.english_name).join(', ') || '-',
     },
+    { label: '예산', value: formatMoney(movie.budget) },
+    { label: '수익', value: formatMoney(movie.revenue) },
   ];
 
   const statList = [

@@ -41,6 +41,8 @@ export interface MovieDetail {
   backdrop_path: string | null;
   release_date: string;
   runtime: number | null;
+  budget: number;
+  revenue: number;
   vote_average: number;
   vote_count: number;
   status: string;

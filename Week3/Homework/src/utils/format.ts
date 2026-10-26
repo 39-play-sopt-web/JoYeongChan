@@ -5,6 +5,11 @@ export const formatDate = (date: string) => {
   return `${year}년 ${Number(month)}월 ${Number(day)}일`;
 };
 
+export const formatMoney = (amount: number) => {
+  if (amount === 0) return '정보 없음';
+  return `$${amount.toLocaleString()}`;
+};
+
 export const formatRuntime = (minutes: number | null) => {
   if (!minutes) return '상영 시간 정보 없음';
 
