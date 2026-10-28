@@ -15,6 +15,8 @@ function App() {
     useNumberGame(level);
 
   const handleMenuChange = (nextMenu) => {
+    if (nextMenu === menu) return;
+
     setMenu(nextMenu);
     resetGame();
   };

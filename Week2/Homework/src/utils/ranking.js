@@ -2,7 +2,13 @@ import { RANKING_STORAGE_KEY } from '../constants/game';
 
 export const getRankings = () => {
   const saved = localStorage.getItem(RANKING_STORAGE_KEY);
-  return saved ? JSON.parse(saved) : [];
+  if (!saved) return [];
+
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return [];
+  }
 };
 
 export const saveRanking = (record) => {

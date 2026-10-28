@@ -29,7 +29,11 @@ function Header({ menu, onMenuChange, level, onLevelChange, elapsedTime }) {
       <Right>
         {menu === MENU.GAME && (
           <>
-            <LevelSelect value={level} onChange={(event) => onLevelChange(Number(event.target.value))}>
+            <LevelSelect
+              aria-label="레벨 선택"
+              value={level}
+              onChange={(event) => onLevelChange(Number(event.target.value))}
+            >
               {LEVEL_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
