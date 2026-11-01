@@ -7,17 +7,18 @@ import { issueAuthorizationCode } from '../apis/member';
 import Button from '../components/Button';
 import { Label } from '../components/FormField';
 import { PARTS } from '../constants/member';
+import { useAuthStore } from '../stores/authStore';
 import type { Part } from '../types/member';
-import { saveAuth } from '../utils/auth';
 
 function MemberCodePage() {
   const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
   const [part, setPart] = useState<Part | ''>('');
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: issueAuthorizationCode,
     onSuccess: (authorizationCode, selectedPart) => {
-      saveAuth(authorizationCode, selectedPart);
+      setAuth(authorizationCode, selectedPart);
       navigate('/');
     },
   });
