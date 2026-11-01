@@ -1,10 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
 
-import { deletePost, getPost } from '../apis/post';
+import { deletePost } from '../apis/post';
 import Button from '../components/Button';
 import { QUERY_KEYS } from '../constants/queryKeys';
+import { usePostDetail } from '../hooks/usePostDetail';
 import { useAuthStore } from '../stores/authStore';
 import { formatDateTime } from '../utils/format';
 
@@ -15,10 +16,7 @@ function PostDetailPage() {
   const { postId } = useParams<{ postId: string }>();
   const id = Number(postId);
 
-  const { data: post, isPending, isError } = useQuery({
-    queryKey: QUERY_KEYS.POST_DETAIL(id),
-    queryFn: () => getPost(id),
-  });
+  const { data: post, isPending, isError } = usePostDetail(id);
 
   const { mutate: removePost, isPending: isDeleting } = useMutation({
     mutationFn: () => deletePost(id),

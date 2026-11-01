@@ -1,23 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
 
-import { getPost, updatePost } from '../apis/post';
+import { updatePost } from '../apis/post';
 import Button from '../components/Button';
 import { Counter, ErrorMessage, HelperRow, Input, Label, TextArea } from '../components/FormField';
 import { MAX_LENGTH } from '../constants/post';
 import { QUERY_KEYS } from '../constants/queryKeys';
+import { usePostDetail } from '../hooks/usePostDetail';
 import type { Post } from '../types/post';
 
 function PostEditPage() {
   const { postId } = useParams<{ postId: string }>();
   const id = Number(postId);
 
-  const { data: post, isPending, isError } = useQuery({
-    queryKey: QUERY_KEYS.POST_DETAIL(id),
-    queryFn: () => getPost(id),
-  });
+  const { data: post, isPending, isError } = usePostDetail(id);
 
   if (isPending) return <Message>게시글을 불러오는 중이에요...</Message>;
   if (isError) return <Message>게시글을 찾을 수 없어요.</Message>;
