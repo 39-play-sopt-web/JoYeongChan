@@ -1,11 +1,12 @@
 import { NavLink, useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-import { clearAuth, getPart } from '../utils/auth';
+import { useAuthStore } from '../stores/authStore';
 
 function Header() {
   const navigate = useNavigate();
-  const part = getPart();
+  const part = useAuthStore((state) => state.part);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
 
   const handleLogout = () => {
     clearAuth();
