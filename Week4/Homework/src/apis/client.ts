@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import { getAuthCode } from '../utils/auth';
+import { useAuthStore } from '../stores/authStore';
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
 export const authHeader = () => ({
-  Authorization: getAuthCode() ?? '',
+  Authorization: useAuthStore.getState().authorizationCode ?? '',
 });
 
 export default client;
