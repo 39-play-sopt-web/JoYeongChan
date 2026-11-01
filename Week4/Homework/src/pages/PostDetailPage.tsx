@@ -5,12 +5,13 @@ import styled from 'styled-components';
 import { deletePost, getPost } from '../apis/post';
 import Button from '../components/Button';
 import { QUERY_KEYS } from '../constants/queryKeys';
-import { getAuthCode } from '../utils/auth';
+import { useAuthStore } from '../stores/authStore';
 import { formatDateTime } from '../utils/format';
 
 function PostDetailPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const authorizationCode = useAuthStore((state) => state.authorizationCode);
   const { postId } = useParams<{ postId: string }>();
   const id = Number(postId);
 
@@ -32,7 +33,7 @@ function PostDetailPage() {
   });
 
   const handleDelete = () => {
-    if (!getAuthCode()) {
+    if (!authorizationCode) {
       alert('회원 코드를 먼저 발급받아 주세요.');
       navigate('/auth');
       return;
