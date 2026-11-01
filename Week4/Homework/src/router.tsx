@@ -6,10 +6,10 @@ import PostDetailPage from './pages/PostDetailPage';
 import PostEditPage from './pages/PostEditPage';
 import PostListPage from './pages/PostListPage';
 import PostWritePage from './pages/PostWritePage';
-import { getAuthCode } from './utils/auth';
+import { useAuthStore } from './stores/authStore';
 
 const requireAuth = () => {
-  if (!getAuthCode()) {
+  if (!useAuthStore.getState().authorizationCode) {
     alert('회원 코드를 먼저 발급받아 주세요.');
     return redirect('/auth');
   }
