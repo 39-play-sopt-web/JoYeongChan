@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import styled from 'styled-components';
 
-import { getPosterUrl } from '../constants/image';
+import { getPosterUrl } from '../utils/image';
 import type { Movie } from '../types/movie';
 import { formatDate } from '../utils/format';
 

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router';
 import styled from 'styled-components';
 
 import { getMovieDetail } from '../apis/movie';
-import { getBackdropUrl, getPosterUrl } from '../constants/image';
+import { getBackdropUrl, getPosterUrl } from '../utils/image';
 import type { MovieDetail as MovieDetailType } from '../types/movie';
 import { formatDate, formatMoney, formatRuntime } from '../utils/format';
 
