@@ -17,6 +17,7 @@ function MovieList() {
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,7 +52,7 @@ function MovieList() {
     return () => {
       ignore = true;
     };
-  }, [filter, page]);
+  }, [filter, page, retryCount]);
 
   useEffect(() => {
     const target = bottomRef.current;
@@ -102,7 +103,14 @@ function MovieList() {
 
       {movies.length > 0 && <div ref={bottomRef} />}
       {isLoading && <Message>영화를 불러오는 중이에요...</Message>}
-      {isError && <Message>영화를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</Message>}
+      {isError && (
+        <ErrorBox>
+          <Message>영화를 불러오지 못했어요.</Message>
+          <RetryButton type="button" onClick={() => setRetryCount((prev) => prev + 1)}>
+            다시 시도
+          </RetryButton>
+        </ErrorBox>
+      )}
       {!hasMore && movies.length > 0 && <Message>모든 영화를 불러왔어요.</Message>}
     </Wrapper>
   );
@@ -146,4 +154,26 @@ const Message = styled.p`
   padding: 40px 0;
   text-align: center;
   color: ${({ theme }) => theme.color.subText};
+`;
+
+const ErrorBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 40px;
+`;
+
+const RetryButton = styled.button`
+  padding: 8px 20px;
+  border: 1px solid ${({ theme }) => theme.color.primary};
+  border-radius: ${({ theme }) => theme.radius.small};
+  color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.color.white};
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.primaryLight};
+  }
 `;
