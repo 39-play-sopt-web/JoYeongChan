@@ -2,6 +2,9 @@ import client from './client';
 import type { MovieDetail, MovieListResponse } from '../types/movie';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
+const MAX_RATING = 10;
+
+const toExclusiveMax = (max: number) => (max === MAX_RATING ? max : max - 0.001);
 
 interface GetMoviesParams {
   page: number;
@@ -19,7 +22,7 @@ export const getMovies = ({ page, minRating, maxRating }: GetMoviesParams) => {
         include_adult: false,
         page,
         'vote_average.gte': minRating,
-        'vote_average.lte': maxRating,
+        'vote_average.lte': toExclusiveMax(maxRating),
       },
     })
     .json<MovieListResponse>();
