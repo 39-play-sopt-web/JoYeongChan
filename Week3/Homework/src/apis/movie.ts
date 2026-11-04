@@ -1,7 +1,6 @@
 import client from './client';
 import type { MovieDetail, MovieListResponse } from '../types/movie';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
 const MAX_RATING = 10;
 
 const toExclusiveMax = (max: number) => (max === MAX_RATING ? max : max - 0.001);
@@ -16,8 +15,6 @@ export const getMovies = ({ page, minRating, maxRating }: GetMoviesParams) => {
   return client
     .get('discover/movie', {
       searchParams: {
-        api_key: API_KEY,
-        language: 'ko-KR',
         sort_by: 'popularity.desc',
         include_adult: false,
         page,
@@ -30,11 +27,6 @@ export const getMovies = ({ page, minRating, maxRating }: GetMoviesParams) => {
 
 export const getMovieDetail = (movieId: string) => {
   return client
-    .get(`movie/${movieId}`, {
-      searchParams: {
-        api_key: API_KEY,
-        language: 'ko-KR',
-      },
-    })
+    .get(`movie/${movieId}`)
     .json<MovieDetail>();
 };
