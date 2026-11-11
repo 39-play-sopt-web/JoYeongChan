@@ -37,8 +37,9 @@ function EditForm({ post }: EditFormProps) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: () => updatePost(post.id, { title: title.trim(), content: content.trim() }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.POSTS });
+    onSuccess: (updatedPost) => {
+      queryClient.setQueryData(QUERY_KEYS.POST_DETAIL(post.id), updatedPost);
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.POST_LISTS });
       alert('게시글이 수정되었어요.');
       navigate(`/posts/${post.id}`);
     },
