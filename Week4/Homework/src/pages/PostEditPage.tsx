@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import { Counter, ErrorMessage, HelperRow, Input, Label, TextArea } from '../components/FormField';
 import { MAX_LENGTH } from '../constants/post';
 import { QUERY_KEYS } from '../constants/queryKeys';
-import { usePostDetail } from '../hooks/usePostDetail';
+import { isValidPostId, usePostDetail } from '../hooks/usePostDetail';
 import type { Post } from '../types/post';
 
 function PostEditPage() {
@@ -17,6 +17,7 @@ function PostEditPage() {
 
   const { data: post, isPending, isError } = usePostDetail(id);
 
+  if (!isValidPostId(id)) return <Message>잘못된 게시글 주소예요.</Message>;
   if (isPending) return <Message>게시글을 불러오는 중이에요...</Message>;
   if (isError) return <Message>게시글을 찾을 수 없어요.</Message>;
 

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { deletePost } from '../apis/post';
 import Button from '../components/Button';
 import { QUERY_KEYS } from '../constants/queryKeys';
-import { usePostDetail } from '../hooks/usePostDetail';
+import { isValidPostId, usePostDetail } from '../hooks/usePostDetail';
 import { useAuthStore } from '../stores/authStore';
 import { formatDateTime } from '../utils/format';
 
@@ -41,6 +41,16 @@ function PostDetailPage() {
     removePost();
   };
 
+  if (!isValidPostId(id)) {
+    return (
+      <>
+        <Message>잘못된 게시글 주소예요.</Message>
+        <Button type="button" $variant="outline" onClick={() => navigate('/')}>
+          ← 목록으로
+        </Button>
+      </>
+    );
+  }
   if (isPending) return <Message>게시글을 불러오는 중이에요...</Message>;
   if (isError) {
     return (
