@@ -6,8 +6,14 @@ const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-export const authHeader = () => ({
-  Authorization: useAuthStore.getState().authorizationCode ?? '',
+client.interceptors.request.use((config) => {
+  const authorizationCode = useAuthStore.getState().authorizationCode;
+
+  if (authorizationCode) {
+    config.headers.Authorization = authorizationCode;
+  }
+
+  return config;
 });
 
 export default client;
